@@ -19,12 +19,12 @@ public class Entity : MonoBehaviour
     [SerializeField] protected float jumpForce = 6;
     [Header("Number of jumps available after touching the ground (2 for double jump)")]
     [SerializeField] protected int startingJumpCount = 2;
-    private int currentJumpCount; // This is to keep track of number of jumps used
+    private int _currentJumpCount; // This is to keep track of number of jumps used
     [SerializeField] protected float dashForce = 30;
     [SerializeField] protected float dashDuration = 0.2f;
     [SerializeField] protected int startingHealth = 100;
-    private int currentHealth;
-    [Header("Invulerability duration after taking damage (in seconds)")]
+    private int _currentHealth;
+    [Header("Invulnerability duration after taking damage (in seconds)")]
     [SerializeField] protected float invulnerabilityDuration = 2;
     [SerializeField] protected bool hasInvulnerability = false;
     [HideInInspector] public bool isInvulnerable;
@@ -42,9 +42,9 @@ public class Entity : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
 
     // Checks
-    private bool doGroundCheck;
-    private bool canDash;
-    private bool facingRight;
+    private bool _doGroundCheck;
+    private bool _canDash;
+    private bool _facingRight;
 
     #endregion
 
@@ -55,10 +55,10 @@ public class Entity : MonoBehaviour
         rigidBody2D = GetComponent<Rigidbody2D>();
         boxCollider2D = GetComponent<BoxCollider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        currentJumpCount = startingJumpCount;
-        currentHealth = startingHealth;
+        _currentJumpCount = startingJumpCount;
+        _currentHealth = startingHealth;
         isInvulnerable = false;
-        canDash = true;
+        _canDash = true;
     }
 
     #endregion
@@ -72,12 +72,12 @@ public class Entity : MonoBehaviour
         // Check which side the character is facing and makes the character face that direction
         if (horizontalInput > 0)
         {
-            facingRight = true;
+            _facingRight = true;
             transform.localScale = new Vector3(1, 1, 1);
         }
         else if (horizontalInput < 0)
         {
-            facingRight = false;
+            _facingRight = false;
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
@@ -95,7 +95,7 @@ public class Entity : MonoBehaviour
         // Enable ground check (we do ground check like this so double jump will work properly without giving extra or less jumps)
         if (rigidBody2D.velocity.y < 0)
         {
-            doGroundCheck = true;
+            _doGroundCheck = true;
         }
     }
 
@@ -116,7 +116,7 @@ public class Entity : MonoBehaviour
 
     private void Move()
     {
-        if (canDash)
+        if (_canDash)
         {
             rigidBody2D.velocity = new Vector2(horizontalInput * movementSpeed, rigidBody2D.velocity.y);
         }
@@ -124,12 +124,12 @@ public class Entity : MonoBehaviour
         Jump();
 
         // Dash
-        if (dashInput && canDash)
+        if (dashInput && _canDash)
         {
-            canDash = false;
+            _canDash = false;
             isInvulnerable = true;
             // Dash towards the direction the player is facing
-            if (facingRight)
+            if (_facingRight)
             {
                 rigidBody2D.velocity = new Vector2(dashForce, rigidBody2D.velocity.y);
             }
@@ -150,7 +150,7 @@ public class Entity : MonoBehaviour
     {
         yield return new WaitForSeconds(dashDuration);
         rigidBody2D.velocity = new Vector2(0, rigidBody2D.velocity.y);
-        canDash = true;
+        _canDash = true;
         isInvulnerable = false;
     }
 
@@ -161,9 +161,9 @@ public class Entity : MonoBehaviour
     private void Jump()
     {
         // Jump
-        if (currentJumpCount > 0 && jumpInput)
+        if (_currentJumpCount > 0 && jumpInput)
         {
-            currentJumpCount--;
+            _currentJumpCount--;
             rigidBody2D.velocity = new Vector2(rigidBody2D.velocity.x, 0);
             rigidBody2D.AddForce(new Vector2(0f, jumpForce * 100));
         }
@@ -178,12 +178,12 @@ public class Entity : MonoBehaviour
         RaycastHit2D rayCastHit = Physics2D.BoxCast(boxCollider2D.bounds.center, boxCollider2D.bounds.size, 0f, Vector2.down, extraExtents, groundLayerMask);
 
         // Ground check
-        if (doGroundCheck)
+        if (_doGroundCheck)
         {
-            if (rayCastHit.collider != null)
+            if (rayCastHit.collider)
             {
-                doGroundCheck = false;
-                currentJumpCount = startingJumpCount;
+                _doGroundCheck = false;
+                _currentJumpCount = startingJumpCount;
             }
         }
     }
@@ -226,13 +226,12 @@ public class Entity : MonoBehaviour
     {
         if (!isInvulnerable)
         {
-            currentHealth -= damageValue;
+            _currentHealth -= damageValue;
             if (hasInvulnerability)
             {
                 isInvulnerable = true;
                 StartCoroutine(Invulnerability(invulnerabilityDuration));
             }
-            Debug.Log(currentHealth);
         }
     }
 
