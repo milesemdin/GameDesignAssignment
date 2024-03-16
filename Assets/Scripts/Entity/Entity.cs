@@ -7,6 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BoxCollider2D))]
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(TeamID))]
 
 public class Entity : MonoBehaviour
 {
@@ -86,7 +87,6 @@ public class Entity : MonoBehaviour
     }
 
     #endregion
-
 
     #region FixedUpdate
 

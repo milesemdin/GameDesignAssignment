@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(TeamID))]
 public class Damager : MonoBehaviour
 {
     #region Variables
 
     [SerializeField] private int damage;
-    [SerializeField] private TeamID.ID teamID;
     [SerializeField] private bool isProjectile;
 
     #endregion
@@ -39,9 +39,10 @@ public class Damager : MonoBehaviour
     private void OnCollision(GameObject collider)
     {
         TeamID collisionTeamID = collider.GetComponent<TeamID>();
+        TeamID teamID = GetComponent<TeamID>();
         if (collisionTeamID != null)
         {
-            if (teamID != collisionTeamID.teamID)
+            if (teamID.teamID != collisionTeamID.teamID)
             {
                 collider.GetComponent<Entity>().TakeDamage(5);
                 if (isProjectile && !collider.GetComponent<Entity>().isInvulnerable)
