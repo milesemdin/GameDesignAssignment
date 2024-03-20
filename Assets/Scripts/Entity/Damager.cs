@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,19 @@ public class Damager : MonoBehaviour
 
     [SerializeField] private int damage;
     [SerializeField] private bool isProjectile;
+    [SerializeField] private float destroyAfter;
+
+    #endregion
+
+    #region Start
+
+    private void Start()
+    {
+        if (isProjectile)
+        {
+            Destroy(gameObject, destroyAfter);
+        }
+    }
 
     #endregion
 

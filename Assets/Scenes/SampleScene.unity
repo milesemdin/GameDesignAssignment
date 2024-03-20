@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 2110631329}
   - component: {fileID: 2110631330}
   - component: {fileID: 2110631331}
+  - component: {fileID: 2110631333}
   m_Layer: 0
   m_Name: TestPlayer
   m_TagString: Untagged
@@ -730,8 +731,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 5
-  teamID: 1
   isProjectile: 0
+  destroyAfter: 0
 --- !u!114 &2110631332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -757,6 +758,19 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &2110631333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2110631324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf626627f9320b24b98b6f584f2e78c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 430234802943876197, guid: ae4f20e4d448f9641a082cebc17eea9f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
