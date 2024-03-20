@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 430234802943876197}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.7372, y: -2.4594, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6653, y: 0.0376, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -113,9 +113,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5957d77e78a6f0444b0833b06c276d48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 10
   isProjectile: 1
-  destroyAfter: 3
+  destroyAfter: 1.5
 --- !u!114 &4640578744018385809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,7 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2c2c5880219f44c8fbdc98f276b177, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 5
+  facingRight: 1
+  bulletSpeed: 20
 --- !u!61 &7519940418474517143
 BoxCollider2D:
   m_ObjectHideFlags: 0

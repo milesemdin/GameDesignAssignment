@@ -9,8 +9,10 @@ public class Shooting : MonoBehaviour
     
     protected void Shoot()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.O))
         {
+            bool facingRight = GetComponent<Entity>().facingRight;
+            bullet.GetComponent<BulletMovement>().facingRight = facingRight;
             Instantiate(bullet, transform.position, Quaternion.identity);
         }
         
