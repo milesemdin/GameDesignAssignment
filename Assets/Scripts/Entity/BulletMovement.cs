@@ -6,10 +6,16 @@ using UnityEngine;
 
 public class BulletMovement : MonoBehaviour
 {
+   public bool facingRight;
    public float bulletSpeed;
 
    private void Update()
    {
-      transform.Translate(new Vector2(bulletSpeed * Time.deltaTime, 0));
+      int direction = 1;
+      if (!facingRight)
+      {
+         direction = -1;
+      }
+      transform.Translate(Vector2.right * bulletSpeed * Time.deltaTime * direction);
    }
 }

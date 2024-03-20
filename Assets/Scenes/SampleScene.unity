@@ -308,8 +308,12 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+<<<<<<< HEAD
   range: 0
   movementRange: 0
+=======
+  facingRight: 0
+>>>>>>> d30afa76a8e92fe1eb42134b3966011d47ce7c70
 --- !u!114 &132582561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,6 +764,7 @@ MonoBehaviour:
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 128
+  facingRight: 0
 --- !u!114 &2110631333
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,7 +45,7 @@ public class Entity : MonoBehaviour
     // Checks
     private bool _doGroundCheck;
     private bool _canDash;
-    private bool _facingRight;
+    [HideInInspector] public bool facingRight;
 
     #endregion
 
@@ -73,12 +73,12 @@ public class Entity : MonoBehaviour
         // Check which side the character is facing and makes the character face that direction
         if (horizontalInput > 0)
         {
-            _facingRight = true;
+            facingRight = true;
             transform.localScale = new Vector3(1, 1, 1);
         }
         else if (horizontalInput < 0)
         {
-            _facingRight = false;
+            facingRight = false;
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
@@ -129,7 +129,7 @@ public class Entity : MonoBehaviour
             _canDash = false;
             isInvulnerable = true;
             // Dash towards the direction the player is facing
-            if (_facingRight)
+            if (facingRight)
             {
                 rigidBody2D.velocity = new Vector2(dashForce, rigidBody2D.velocity.y);
             }
