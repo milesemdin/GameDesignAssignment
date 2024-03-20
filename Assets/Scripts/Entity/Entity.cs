@@ -232,6 +232,11 @@ public class Entity : MonoBehaviour
                 isInvulnerable = true;
                 StartCoroutine(Invulnerability(invulnerabilityDuration));
             }
+
+            if (_currentHealth <= 0)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 

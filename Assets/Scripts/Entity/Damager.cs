@@ -10,17 +10,31 @@ public class Damager : MonoBehaviour
 
     [SerializeField] private int damage;
     [SerializeField] private bool isProjectile;
-    [SerializeField] private float destroyAfter;
+    [SerializeField] private bool destroyProjectileOffScreen;
 
     #endregion
 
-    #region Start
+    #region Update
 
-    private void Start()
+    private void Update()
     {
-        if (isProjectile)
+        if (isProjectile && destroyProjectileOffScreen)
         {
-            Destroy(gameObject, destroyAfter);
+            DestroyOffScreen();
+        }
+    }
+
+    #endregion
+
+    #region DestroyOffScreen
+
+    private void DestroyOffScreen()
+    {
+        Vector3 cameraPosition = Camera.main.WorldToScreenPoint(this.transform.position);
+
+        if (cameraPosition.x < 0 || cameraPosition.x > Screen.width || cameraPosition.y < 0 || cameraPosition.y > Screen.height)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -58,7 +72,7 @@ public class Damager : MonoBehaviour
         {
             if (teamID.teamID != collisionTeamID.teamID)
             {
-                collider.GetComponent<Entity>().TakeDamage(5);
+                collider.GetComponent<Entity>().TakeDamage(damage);
                 if (isProjectile && !collider.GetComponent<Entity>().isInvulnerable)
                 {
                     Destroy(gameObject);

@@ -115,7 +115,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   isProjectile: 1
-  destroyAfter: 1.5
+  destroyProjectileOffScreen: 1
 --- !u!114 &4640578744018385809
 MonoBehaviour:
   m_ObjectHideFlags: 0

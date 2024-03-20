@@ -6,7 +6,7 @@ public class TeamID : MonoBehaviour
 {
     public enum ID
     {
-        CupHead = 1,
+        PotHead = 1,
         Defender = 2
     }
 
