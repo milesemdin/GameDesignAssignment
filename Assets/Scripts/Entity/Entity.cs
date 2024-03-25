@@ -60,6 +60,7 @@ public class Entity : MonoBehaviour
         _currentHealth = startingHealth;
         isInvulnerable = false;
         _canDash = true;
+        facingRight = true;
     }
 
     #endregion

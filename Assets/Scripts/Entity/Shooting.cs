@@ -8,6 +8,7 @@ public class Shooting : MonoBehaviour
     public GameObject bullet;
     public float shootCooldown;
     private bool shootReady;
+    public bool towardsPlayer;
 
     private void Start()
     {
@@ -25,14 +26,29 @@ public class Shooting : MonoBehaviour
         if (shootReady && Input.GetKey(KeyCode.O))
         {
             bool facingRight = GetComponent<Entity>().facingRight;
-            bullet.GetComponent<BulletMovement>().facingRight = facingRight;
+            float xRotation = 0;
 
-            Instantiate(bullet, transform.position, Quaternion.identity);
+            if (!facingRight)
+            {
+                xRotation = 180;
+            }
+
+            if (towardsPlayer)
+            {
+
+            }
+
+            Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, xRotation));
 
             shootReady = false;
             StartCoroutine(ShotCooldown(shootCooldown));
         }
         
+    }
+
+    private Quaternion RotationTowardsPlayer()
+    {
+        return Quaternion.identity;
     }
 
     private IEnumerator ShotCooldown(float duration)
