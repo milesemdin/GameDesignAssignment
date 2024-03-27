@@ -23,6 +23,8 @@ public class Entity : MonoBehaviour
     private int _currentJumpCount; // This is to keep track of number of jumps used
     [SerializeField] protected float dashForce = 30;
     [SerializeField] protected float dashDuration = 0.2f;
+    [SerializeField] protected float dashCooldown = 0.25f;
+    private bool dashing = false;
     [SerializeField] protected int startingHealth = 100;
     private int _currentHealth;
     [Header("Invulnerability duration after taking damage (in seconds)")]
@@ -117,7 +119,7 @@ public class Entity : MonoBehaviour
 
     private void Move()
     {
-        if (_canDash)
+        if (!dashing)
         {
             rigidBody2D.velocity = new Vector2(horizontalInput * movementSpeed, rigidBody2D.velocity.y);
         }
@@ -127,17 +129,6 @@ public class Entity : MonoBehaviour
         // Dash
         if (dashInput && _canDash)
         {
-            _canDash = false;
-            isInvulnerable = true;
-            // Dash towards the direction the player is facing
-            if (facingRight)
-            {
-                rigidBody2D.velocity = new Vector2(dashForce, rigidBody2D.velocity.y);
-            }
-            else
-            {
-                rigidBody2D.velocity = new Vector2(-dashForce, rigidBody2D.velocity.y);
-            }
             StartCoroutine(Dash());
         }
     }
@@ -149,10 +140,27 @@ public class Entity : MonoBehaviour
     // This is not the actual dash but is a delay and resets character speed and colour to the normal colour after the dash
     IEnumerator Dash()
     {
+        dashing = true;
+        _canDash = false;
+        isInvulnerable = true;
+        // Dash towards the direction the player is facing
+        if (facingRight)
+        {
+            rigidBody2D.velocity = new Vector2(dashForce, rigidBody2D.velocity.y);
+        }
+        else
+        {
+            rigidBody2D.velocity = new Vector2(-dashForce, rigidBody2D.velocity.y);
+        }
+            
         yield return new WaitForSeconds(dashDuration);
         rigidBody2D.velocity = new Vector2(0, rigidBody2D.velocity.y);
-        _canDash = true;
         isInvulnerable = false;
+        dashing = false;
+
+        yield return new WaitForSeconds(dashCooldown);
+
+        _canDash = true;
     }
 
     #endregion

@@ -18,37 +18,40 @@ public class Shooting : MonoBehaviour
 
     private void Update()
     {
-        Shoot();
+        if (shootReady && Input.GetKey(KeyCode.O))
+        {
+            Shoot();
+        }
     }
 
     protected void Shoot()
     {
-        if (shootReady && Input.GetKey(KeyCode.O))
+        bool facingRight = GetComponent<Entity>().facingRight;
+        float xRotation = 0;
+
+        if (!facingRight)
         {
-            bool facingRight = GetComponent<Entity>().facingRight;
-            float xRotation = 0;
-
-            if (!facingRight)
-            {
-                xRotation = 180;
-            }
-
-            if (towardsPlayer)
-            {
-
-            }
-
-            Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, xRotation));
-
-            shootReady = false;
-            StartCoroutine(ShotCooldown(shootCooldown));
+            xRotation = 180;
         }
-        
+
+        if (towardsPlayer)
+        {
+            xRotation = XRotationTowardsPlayer();
+        }
+
+        Instantiate(bullet, transform.position, Quaternion.Euler(0f, 0f, xRotation));
+
+        shootReady = false;
+        StartCoroutine(ShotCooldown(shootCooldown));
     }
 
-    private Quaternion RotationTowardsPlayer()
+    private float XRotationTowardsPlayer()
     {
-        return Quaternion.identity;
+        float xRotation = 0;
+
+        // Add rotation code here
+
+        return xRotation;
     }
 
     private IEnumerator ShotCooldown(float duration)

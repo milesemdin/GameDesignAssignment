@@ -301,6 +301,7 @@ MonoBehaviour:
   startingJumpCount: 2
   dashForce: 30
   dashDuration: 0.2
+  dashCooldown: 0.5
   startingHealth: 100
   invulnerabilityDuration: 2
   hasInvulnerability: 0
@@ -738,6 +739,7 @@ MonoBehaviour:
   startingJumpCount: 2
   dashForce: 30
   dashDuration: 0.2
+  dashCooldown: 0.25
   startingHealth: 100
   invulnerabilityDuration: 2
   hasInvulnerability: 1
