@@ -4,14 +4,17 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    [SerializeField] private float range;
+    [SerializeField] private float attackRange;
     [SerializeField] private float movementRange;
-    private State state;
+    public State state;
 
-    private enum State
+    
+
+    public enum State
     {
         Idle,
         Attack,
+        Move,
     }
 
 
@@ -38,7 +41,47 @@ public class Enemy : Entity
 
     private void Movement()
     {
-        
+        jumpInput = false;
+        dashInput = false;
+
+        if (state == State.Move)
+        {
+            GameObject player = GameObject.Find("TestPlayer");
+
+            float xPositionDifference = player.transform.position.x - transform.position.x;
+            
+            int movementDirection = 0;
+
+            if (xPositionDifference > 0)
+            {
+                movementDirection = 1;
+            }
+            else if (xPositionDifference < 0)
+            {
+                movementDirection = -1;
+            }
+
+            horizontalInput = movementDirection;
+        }
+        else if (state == State.Attack)
+        {
+            GameObject player = GameObject.Find("TestPlayer");
+
+            float xPositionDifference = player.transform.position.x - transform.position.x;
+
+            float movementDirection = 0;
+
+            if (xPositionDifference > 0)
+            {
+                movementDirection = 0.5f;
+            }
+            else if (xPositionDifference < 0)
+            {
+                movementDirection = -0.5f;
+            }
+
+            horizontalInput = movementDirection;
+        }
 
         /*
          * Notes
@@ -51,9 +94,13 @@ public class Enemy : Entity
     {
         GameObject player = GameObject.Find("TestPlayer");
 
-        if (true) // Add code for range check
+        if (Vector2.Distance(transform.position, player.transform.position) < attackRange) // Add code for range check
         {
             state = State.Attack;
+        }
+        else if (Vector2.Distance(transform.position, player.transform.position) < movementRange) // Add code for movemet check
+        {
+            state = State.Move;
         }
 
         return false;

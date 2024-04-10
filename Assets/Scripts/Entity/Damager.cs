@@ -72,10 +72,14 @@ public class Damager : MonoBehaviour
         {
             if (teamID.teamID != collisionTeamID.teamID)
             {
-                collider.GetComponent<Entity>().TakeDamage(damage);
                 if (isProjectile && !collider.GetComponent<Entity>().isInvulnerable)
                 {
+                    collider.GetComponent<Entity>().TakeDamage(damage);
                     Destroy(gameObject);
+                }
+                else if (!collider.GetComponent<Entity>().isInvulnerable)
+                {
+                    collider.GetComponent<Entity>().TakeDamage(damage);
                 }
             }
         }

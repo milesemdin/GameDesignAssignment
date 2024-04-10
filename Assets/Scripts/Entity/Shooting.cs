@@ -7,7 +7,7 @@ public class Shooting : MonoBehaviour
 {
     public GameObject bullet;
     public float shootCooldown;
-    private bool shootReady;
+    protected bool shootReady;
     public bool towardsPlayer;
 
     private void Start()
@@ -16,7 +16,12 @@ public class Shooting : MonoBehaviour
     }
 
 
-    private void Update()
+    protected virtual void Update()
+    {
+        TakeInput();
+    }
+
+    protected virtual void TakeInput()
     {
         if (shootReady && Input.GetKey(KeyCode.O))
         {
@@ -24,7 +29,7 @@ public class Shooting : MonoBehaviour
         }
     }
 
-    protected void Shoot()
+    protected virtual void Shoot()
     {
         bool facingRight = GetComponent<Entity>().facingRight;
         float xRotation = 0;
