@@ -6,6 +6,7 @@ public class Enemy : Entity
 {
     [SerializeField] private float attackRange;
     [SerializeField] private float movementRange;
+    [SerializeField] private float attackAndMoveRange;
     public State state;
 
     
@@ -13,8 +14,9 @@ public class Enemy : Entity
     public enum State
     {
         Idle,
-        Attack,
         Move,
+        AttackAndMove,
+        Attack,
     }
 
 
@@ -63,7 +65,7 @@ public class Enemy : Entity
 
             horizontalInput = movementDirection;
         }
-        else if (state == State.Attack)
+        else if (state == State.AttackAndMove)
         {
             GameObject player = GameObject.Find("TestPlayer");
 
@@ -97,6 +99,10 @@ public class Enemy : Entity
         if (Vector2.Distance(transform.position, player.transform.position) < attackRange) // Add code for range check
         {
             state = State.Attack;
+        }
+        else if (Vector2.Distance(transform.position, player.transform.position) < attackAndMoveRange) // Add code for range check
+        {
+            state = State.AttackAndMove;
         }
         else if (Vector2.Distance(transform.position, player.transform.position) < movementRange) // Add code for movemet check
         {

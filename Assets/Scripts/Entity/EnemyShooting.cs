@@ -13,7 +13,7 @@ public class EnemyShooting : Shooting
     {
         Enemy.State state = GetComponent<Enemy>().state;
 
-        if (state == Enemy.State.Attack && shootReady)
+        if ((state == Enemy.State.Attack || state == Enemy.State.AttackAndMove) && shootReady)
         {
             Shoot();
         }
